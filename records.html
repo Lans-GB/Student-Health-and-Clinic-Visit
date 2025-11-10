@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Care Collect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body onload="initRecordsPage()">
+
+  <header>
+    <img src="logo.png" alt="Logo">
+    <h1>Kolehiyo ng Lungsod ng Lipa - Care Collect | One Click to Better Care | Clinic Visit</h1>
+    <h2>Health Records</h2>
+  </header>
+
+  <nav>
+    <a href="index.html">Student Information</a>
+    <a href="records.html" class="active">Health Records</a>
+  </nav>
+
+  <div class="container">
+
+    <h2>Search Student</h2>
+    <div class="form-grid">
+      <div>
+        <label>Student ID</label>
+        <input type="text" id="searchId" oninput="autoFillById()">
+      </div>
+      <div>
+        <label>Name</label>
+        <input type="text" id="searchName" oninput="autoFillByName()">
+      </div>
+    </div>
+    <p id="searchStatus" style="margin-top:8px; font-weight:500;"></p>
+
+    <!-- Student Information Display -->
+    <div id="studentInfoDisplay"></div>
+
+    <hr class="thin-line">
+
+    <h2>Health Visit Record</h2>
+    <div class="vital-section">
+      <div class="vital-grid">
+        <div>
+          <label>Blood Pressure</label>
+          <input type="text" id="bp" placeholder="e.g. 120/80">
+        </div>
+        <div>
+          <label>Temperature (°C)</label>
+          <input type="text" id="temp">
+        </div>
+        <div>
+          <label>Pulse Rate (bpm)</label>
+          <input type="text" id="pr">
+        </div>
+        <div>
+          <label>Respiratory Rate (rpm)</label>
+          <input type="text" id="rr">
+        </div>
+        <div>
+          <label>Oxygen Saturation (%)</label>
+          <input type="text" id="oxygen">
+        </div>
+      </div>
+
+      <label for="complaint" style="display:block; margin-top:15px;">Complaint / Notes</label>
+      <textarea id="complaint" rows="3" style="width:100%; padding:5px; margin-top:5px;"></textarea>
+
+
+      <button onclick="saveVisit()">Save Visit</button>
+    </div>
+
+    <div class="records-table">
+      <div class="thin-line"></div>
+      <h3>Visit History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date/Time</th>
+            <th>BP</th>
+            <th>Temp</th>
+            <th>PR</th>
+            <th>RR</th>
+            <th>O₂ Sat</th>
+            <th>Complaint</th>
+          </tr>
+        </thead>
+        <tbody id="visitBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+ <footer>
+  © <a href="https://www.facebook.com/s.lanceandrey" target="_blank">LANS</a>
+ </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

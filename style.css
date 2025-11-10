@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f8f8f8;
+  color: #333;
+}
+
+header {
+  background: #7b1c1c;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+header img {
+  height: 45px;
+  margin-right: 12px;
+}
+
+header h1 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+nav {
+  background: #eee;
+  padding: 6px 16px;
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #7b1c1c;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+nav a.active {
+  color: #7b1c1c;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #7b1c1c;
+}
+
+.thin-line {
+  border-top: 2px solid #7b1c1c;
+  margin: 8px 0 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.health-history {
+  margin-top: 15px;
+}
+
+.checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin: 6px 0;
+}
+
+input, select, textarea, button {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+button {
+  background: #7b1c1c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.student-table {
+  margin-top: 25px;
+}
+
+.student-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.student-table th, .student-table td {
+  border: 1px solid #ccc;
+  text-align: left;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.student-table th {
+  background: #7b1c1c;
+  color: white;
+}
+
+.search-bar {
+  margin-bottom: 8px;
+}
+
+footer {
+  position: fixed;   /* sticks the footer to the viewport */
+  bottom: 0;         /* aligns it at the bottom */
+  left: 0;           /* aligns it to the left */
+  padding: 10px 20px;
+  background-color: #f5f5f5; /* optional: makes it visible */
+  font-size: 14px;
+}
+
+footer a {
+  color: #7b1c1c;
+  text-decoration: none;
+}
+
+.info-card {
+  background: #f2f2f2;
+  border-left: 4px solid #7b1c1c;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.vital-section {
+  margin-top: 15px;
+}
+
+.vital-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.records-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.records-table th, .records-table td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.records-table th {
+  background: #7b1c1c;
+  color: white;
+}

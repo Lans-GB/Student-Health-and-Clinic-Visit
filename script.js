@@ -305,3 +305,84 @@ function loadVisits() {
 function clearVisits() {
   document.getElementById("visitBody").innerHTML = "";
 }
+
+// ==========================
+// LOGIN SYSTEM
+// ==========================
+
+// Default credentials
+if(!localStorage.getItem("username")) {
+  localStorage.setItem("username", "KLLClinicLipa");
+  localStorage.setItem("password", "kolehiyonglungsodnglipa");
+}
+
+// Toggle Change Credentials section
+function toggleChangeCreds() {
+  const div = document.getElementById("changeCredsDiv");
+  div.style.display = div.style.display === "block" ? "none" : "block";
+}
+
+// Login
+function login() {
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+  const loginError = document.getElementById("loginError");
+
+  const savedUser = localStorage.getItem("username");
+  const savedPass = localStorage.getItem("password");
+
+  if(user === savedUser && pass === savedPass) {
+    localStorage.setItem("isLoggedIn", "true");
+    loginError.textContent = "";
+    window.location.href = "student.html";
+  } else {
+    loginError.textContent = "❌ Invalid username or password!";
+  }
+}
+
+// Change Credentials
+function changeCredentials() {
+  const oldUser = document.getElementById("oldUser").value.trim();
+  const oldPass = document.getElementById("oldPass").value.trim();
+  const newUser = document.getElementById("newUser").value.trim();
+  const newPass = document.getElementById("newPass").value.trim();
+  const changeError = document.getElementById("changeError");
+  const changeSuccess = document.getElementById("changeSuccess");
+
+  const savedUser = localStorage.getItem("username");
+  const savedPass = localStorage.getItem("password");
+
+  changeError.textContent = "";
+  changeSuccess.textContent = "";
+
+  if(oldUser !== savedUser || oldPass !== savedPass) {
+    changeError.textContent = "❌ Old credentials are incorrect!";
+    return;
+  }
+
+  if(!newUser || !newPass) {
+    changeError.textContent = "❌ Please enter new username and password!";
+    return;
+  }
+
+  localStorage.setItem("username", newUser);
+  localStorage.setItem("password", newPass);
+  changeSuccess.textContent = "✅ Credentials updated successfully!";
+  document.getElementById("oldUser").value = "";
+  document.getElementById("oldPass").value = "";
+  document.getElementById("newUser").value = "";
+  document.getElementById("newPass").value = "";
+}
+
+// Protect pages
+function checkLogin() {
+  if(localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+}
+
+// Logout function
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "index.html";
+}

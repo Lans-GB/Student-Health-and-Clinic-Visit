@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Collect</title>
+  <title>Care Collect - Health Records</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body onload="initRecordsPage()">
 
   <header>
-    <img src="logo.png" alt="Logo">
-    <h1>Kolehiyo ng Lungsod ng Lipa - Care Collect | One Click to Better Care | Clinic Visit</h1>
-    <h2>Health Records</h2>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <img src="image/logo.png" alt="Logo">
+      <h1>Kolehiyo ng Lungsod ng Lipa - Care Collect | One Click to Better Care | Clinic Visit</h1>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </header>
 
+
   <nav>
-    <a href="index.html">Student Information</a>
+    <a href="student.html">Student Information</a>
     <a href="records.html" class="active">Health Records</a>
   </nav>
 
@@ -67,7 +70,6 @@
 
       <label for="complaint" style="display:block; margin-top:15px;">Complaint / Notes</label>
       <textarea id="complaint" rows="3" style="width:100%; padding:5px; margin-top:5px;"></textarea>
-
 
       <button onclick="saveVisit()">Save Visit</button>
     </div>

@@ -1,20 +1,30 @@
+/* =========================
+   Global Styles
+========================= */
 * {
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
   background: #f8f8f8;
   color: #333;
+  min-height: 100vh;
 }
 
+/* =========================
+   Header
+========================= */
 header {
   background: #7b1c1c;
   color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 8px 16px;
+  position: relative;
 }
 
 header img {
@@ -23,10 +33,28 @@ header img {
 }
 
 header h1 {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.logout-btn {
+  background: #fff;
+  color: #7b1c1c;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
   font-weight: 500;
 }
 
+.logout-btn:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   Navigation
+========================= */
 nav {
   background: #eee;
   padding: 6px 16px;
@@ -45,16 +73,19 @@ nav a.active {
   color: #7b1c1c;
 }
 
+/* =========================
+   Container
+========================= */
 .container {
   max-width: 1100px;
   margin: 20px auto;
   background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-h2 {
+h2, h3 {
   color: #7b1c1c;
 }
 
@@ -63,21 +94,13 @@ h2 {
   margin: 8px 0 16px;
 }
 
+/* =========================
+   Forms & Inputs
+========================= */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 10px;
-}
-
-.health-history {
-  margin-top: 15px;
-}
-
-.checklist {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 20px;
-  margin: 6px 0;
 }
 
 input, select, textarea, button {
@@ -85,6 +108,10 @@ input, select, textarea, button {
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 14px;
+}
+
+textarea {
+  resize: none;
 }
 
 button {
@@ -99,45 +126,56 @@ button:hover {
   opacity: 0.9;
 }
 
-.student-table {
-  margin-top: 25px;
+/* =========================
+   Health History / Checklists
+========================= */
+.health-history {
+  margin-top: 15px;
 }
 
-.student-table table {
+.checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin: 6px 0;
+}
+
+/* =========================
+   Tables
+========================= */
+.student-table table,
+.records-table table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
-.student-table th, .student-table td {
+.student-table th,
+.records-table th,
+.student-table td,
+.records-table td {
   border: 1px solid #ccc;
   text-align: left;
   padding: 6px;
   font-size: 13px;
 }
 
-.student-table th {
+.student-table th,
+.records-table th {
   background: #7b1c1c;
   color: white;
 }
 
+/* =========================
+   Search Bar
+========================= */
 .search-bar {
   margin-bottom: 8px;
 }
 
-footer {
-  position: fixed;   /* sticks the footer to the viewport */
-  bottom: 0;         /* aligns it at the bottom */
-  left: 0;           /* aligns it to the left */
-  padding: 10px 20px;
-  background-color: #f5f5f5; /* optional: makes it visible */
-  font-size: 14px;
-}
-
-footer a {
-  color: #7b1c1c;
-  text-decoration: none;
-}
-
+/* =========================
+   Info Card (Student Display)
+========================= */
 .info-card {
   background: #f2f2f2;
   border-left: 4px solid #7b1c1c;
@@ -145,6 +183,9 @@ footer a {
   margin-bottom: 15px;
 }
 
+/* =========================
+   Vital Signs / Health Section
+========================= */
 .vital-section {
   margin-top: 15px;
 }
@@ -155,19 +196,78 @@ footer a {
   gap: 8px;
 }
 
-.records-table table {
+/* =========================
+   Footer
+========================= */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  font-size: 14px;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+  z-index: 1;
 }
 
-.records-table th, .records-table td {
+footer a {
+  color: #7b1c1c;
+  text-decoration: none;
+}
+
+/* =========================
+   Login Page
+========================= */
+.login-container {
+  position: relative;
+  z-index: 1;
+  max-width: 400px;
+  margin: 80px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.login-container h1 {
+  color: #7b1c1c;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
   border: 1px solid #ccc;
-  padding: 6px;
-  font-size: 13px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.records-table th {
-  background: #7b1c1c;
-  color: white;
+.login-container .change-creds {
+  display: none;
+  text-align: left;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.login-container .change-creds h3 {
+  margin-top: 0;
+  color: #7b1c1c;
+  font-size: 16px;
+}
+
+.error-msg {
+  color: red;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.success-msg {
+  color: green;
+  margin-top: 5px;
+  font-size: 14px;
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Collect - Student Information</title>
+  <title>Care Collect - Patient Information</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -12,59 +12,40 @@
     <header>
     <div style="display:flex; align-items:center; gap:12px;">
         <img src="image/logo.png" alt="Logo">
-        <h1>Kolehiyo ng Lungsod ng Lipa - Care Collect | One Click to Better Care | Student Registration</h1>
+        <h1>Care Collect | One Click to Better Care | Patient Registration</h1>
     </div>
     <button class="logout-btn" onclick="logout()">Logout</button>
     </header>
 
-
   <nav>
-    <a href="student.html" class="active">Student Information</a>
+    <a href="student.html" class="active">Patient Information</a>
     <a href="records.html">Health Records</a>
   </nav>
 
   <div class="container">
-    <h2>Student Information Form</h2>
+    <h2>Patient Information Form</h2>
     <div class="thin-line"></div>
 
     <div class="form-section">
       <div class="form-grid">
-        <input type="text" id="studentId" placeholder="Student ID">
-        <input type="text" id="name" placeholder="Name (Last Name, First Name, Middle Name)">
+
+        <!-- REMOVED: Manual input for studentId -->
+        <!-- ID now auto increment → no input field -->
+        
+        <input type="text" id="name" placeholder="Full Name (Last, First, Middle)">
         <input type="number" id="age" placeholder="Age">
+
         <select id="sex">
           <option value="" disabled selected>Sex</option>
           <option>Male</option>
           <option>Female</option>
         </select>
-        <select id="yearLevel">
-          <option value="" disabled selected>Year Level</option>
-          <option>1st Year</option>
-          <option>2nd Year</option>
-          <option>3rd Year</option>
-          <option>4th Year</option>
-        </select>
 
-        <select id="program">
-          <option value="" disabled selected>Department - Program</option>
-          <option>College of Education and Allied Sciences - BSE English</option>
-          <option>College of Education and Allied Sciences - BSE Mathematics</option>
-          <option>College of Education and Allied Sciences - BSE Filipino</option>
-          <option>College of Education and Allied Sciences - BSE Science</option>
-          <option>College of Education and Allied Sciences - BSE Values Education</option>
-          <option>College of Education and Allied Sciences - BSE Social Studies</option>
-          <option>College of Education and Allied Sciences - Bachelor of Elementary Education</option>
-          <option>College of Education and Allied Sciences - Bachelor of Physical Education</option>
-          <option>College of Computer Studies - BS Computer Science</option>
-          <option>College of Computer Studies - Associate in Computer Technology</option>
-          <option>College of Business Administration - BSBA Financial Management</option>
-          <option>College of Business Administration - BSBA Marketing Management</option>
-          <option>College of Business Administration - BSBA Operations Management</option>
-          <option>College of Communication Arts - BA Communication</option>
-          <option>College of Criminal Justice Education - BS Criminology</option>
-          <option>College of Nursing - BS Nursing</option>
-        </select>
+        <!-- Year Level → Barangay -->
+        <input type="text" id="barangay" placeholder="Barangay">
 
+        <!-- Department removed completely -->
+        
         <input type="text" id="contact" placeholder="Contact Number">
         <input type="number" id="height" placeholder="Height (cm)" oninput="autoBMI()">
         <input type="number" id="weight" placeholder="Weight (kg)" oninput="autoBMI()">
@@ -85,9 +66,11 @@
         <input type="text" id="otherHistory" placeholder="Other (specify)">
       </div>
 
-      <button id="submitBtn" onclick="addStudent()">Add Student</button>
+      <!-- Change button label -->
+      <button id="submitBtn" onclick="addStudent()">Add Patient</button>
+
       <div class="thin-line"></div>
-      <h3>Student Record</h3>
+      <h3>Patient Record</h3>
     </div>
 
     <div class="student-table">
@@ -95,6 +78,7 @@
         <label>Search by ID or Name:</label>
         <input type="text" id="searchInput" onkeyup="searchStudent()">
       </div>
+
       <table>
         <thead>
           <tr>
@@ -102,8 +86,7 @@
             <th>Name</th>
             <th>Age</th>
             <th>Sex</th>
-            <th>Year</th>
-            <th>Program</th>
+            <th>Barangay</th>
             <th>Contact</th>
             <th>Height</th>
             <th>Weight</th>
@@ -118,7 +101,7 @@
   </div>
 
  <footer>
-  © <a href="https://www.facebook.com/s.lanceandrey" target="_blank">LANS</a>
+  © <a>LANS</a>
  </footer>
 
   <script src="script.js"></script>

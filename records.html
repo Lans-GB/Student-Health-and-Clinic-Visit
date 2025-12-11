@@ -17,18 +17,17 @@
     <button class="logout-btn" onclick="logout()">Logout</button>
   </header>
 
-
   <nav>
-    <a href="student.html">Student Information</a>
+    <a href="student.html">Patient Information</a>
     <a href="records.html" class="active">Health Records</a>
   </nav>
 
   <div class="container">
 
-    <h2>Search Student</h2>
+    <h2>Search Patient</h2>
     <div class="form-grid">
       <div>
-        <label>Student ID</label>
+        <label>Patient ID</label>
         <input type="text" id="searchId" oninput="autoFillById()">
       </div>
       <div>
@@ -36,15 +35,17 @@
         <input type="text" id="searchName" oninput="autoFillByName()">
       </div>
     </div>
+
     <p id="searchStatus" style="margin-top:8px; font-weight:500;"></p>
 
-    <!-- Student Information Display -->
+    <!-- Patient Information Display -->
     <div id="studentInfoDisplay"></div>
 
     <hr class="thin-line">
 
     <h2>Health Visit Record</h2>
     <div class="vital-section">
+
       <div class="vital-grid">
         <div>
           <label>Blood Pressure</label>

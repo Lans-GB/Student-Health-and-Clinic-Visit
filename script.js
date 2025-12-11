@@ -18,6 +18,7 @@ function autoBMI() {
   const h = parseFloat(document.getElementById("height").value);
   const w = parseFloat(document.getElementById("weight").value);
   const bmiField = document.getElementById("bmiDisplay");
+
   if (h > 0 && w > 0) {
     const bmi = (w / ((h / 100) ** 2)).toFixed(1);
     bmiField.value = bmi;
@@ -41,9 +42,9 @@ function addStudent() {
   const weight = document.getElementById("weight").value.trim();
   const bmi = document.getElementById("bmiDisplay").value.trim();
 
-  // Health history checkboxes
   const history = Array.from(document.querySelectorAll('input[name="history"]:checked'))
     .map(cb => cb.value);
+
   const other = document.getElementById("otherHistory").value.trim();
   if (other) history.push(other);
 
@@ -52,6 +53,7 @@ function addStudent() {
     return;
   }
 
+  const existing = students.find(s => s.id === id);
   const studentObj = {
     id,
     name,
@@ -64,18 +66,15 @@ function addStudent() {
     weight,
     bmi,
     healthHistory: history.join(", "),
-    visits: students.find(s => s.id === id)?.visits || []
+    visits: existing?.visits || []
   };
 
   if (editId) {
-    // Edit existing student
     students = students.map(s => (s.id === editId ? studentObj : s));
     editId = null;
     document.getElementById("submitBtn").innerText = "Add Student";
   } else {
-    // Add new
-    const exists = students.some(s => s.id === id);
-    if (exists) {
+    if (existing) {
       alert("Student ID already exists!");
       return;
     }
@@ -99,8 +98,8 @@ function clearForm() {
 function showTable() {
   const tbody = document.getElementById("studentTableBody");
   if (!tbody) return;
-  tbody.innerHTML = "";
 
+  tbody.innerHTML = "";
   students.forEach(s => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -142,7 +141,7 @@ function editStudent(id) {
   document.getElementById("weight").value = s.weight;
   document.getElementById("bmiDisplay").value = s.bmi;
 
-  const histories = s.healthHistory.split(", ").map(h => h.trim());
+  const histories = s.healthHistory.split(", ").map(x => x.trim());
   document.querySelectorAll('input[name="history"]').forEach(cb => {
     cb.checked = histories.includes(cb.value);
   });
@@ -153,6 +152,7 @@ function editStudent(id) {
 
 function deleteStudent(id) {
   if (!confirm("Delete this student?")) return;
+
   students = students.filter(s => s.id !== id);
   saveData();
   showTable();
@@ -163,42 +163,45 @@ function deleteStudent(id) {
 // -------------------------
 function searchStudent() {
   const filter = document.getElementById("searchInput").value.toLowerCase();
-  const tbody = document.getElementById("studentTableBody");
-  const rows = tbody.getElementsByTagName("tr");
-  for (let i = 0; i < rows.length; i++) {
-    const idCell = rows[i].getElementsByTagName("td")[0];
-    const nameCell = rows[i].getElementsByTagName("td")[1];
-    if (!idCell || !nameCell) continue;
+  const rows = document.getElementById("studentTableBody").getElementsByTagName("tr");
+
+  Array.from(rows).forEach(row => {
+    const idCell = row.getElementsByTagName("td")[0];
+    const nameCell = row.getElementsByTagName("td")[1];
     const text = (idCell.textContent + " " + nameCell.textContent).toLowerCase();
-    rows[i].style.display = text.includes(filter) ? "" : "none";
-  }
+
+    row.style.display = text.includes(filter) ? "" : "none";
+  });
 }
 
 // -------------------------
-// Health Records Page Logic
+// Health Records Page
 // -------------------------
 function initRecordsPage() {
-  if (!students.length) saveData(); // initialize if empty
+  saveData(); // ensure structure
 }
 
 function autoFillById() {
   const id = document.getElementById("searchId").value.trim();
   const nameInput = document.getElementById("searchName");
   const status = document.getElementById("searchStatus");
+
   currentStudent = null;
 
   if (!id) {
     nameInput.value = "";
     status.textContent = "";
     document.getElementById("studentInfoDisplay").innerHTML = "";
+    clearVisits();
     return;
   }
 
   const student = students.find(s => s.id === id);
   if (student) {
-    nameInput.value = student.name;
-    status.textContent = `✅ Record found for ${student.name}`;
     currentStudent = student;
+    nameInput.value = student.name;
+
+    status.textContent = `✅ Record found for ${student.name}`;
     displayStudentInfo(student);
     loadVisits();
   } else {
@@ -213,20 +216,23 @@ function autoFillByName() {
   const name = document.getElementById("searchName").value.trim().toLowerCase();
   const idInput = document.getElementById("searchId");
   const status = document.getElementById("searchStatus");
+
   currentStudent = null;
 
   if (!name) {
     idInput.value = "";
     status.textContent = "";
     document.getElementById("studentInfoDisplay").innerHTML = "";
+    clearVisits();
     return;
   }
 
   const student = students.find(s => s.name.toLowerCase() === name);
   if (student) {
-    idInput.value = student.id;
-    status.textContent = `✅ Record found for ${student.name}`;
     currentStudent = student;
+    idInput.value = student.id;
+
+    status.textContent = `✅ Record found for ${student.name}`;
     displayStudentInfo(student);
     loadVisits();
   } else {
@@ -262,31 +268,34 @@ function saveVisit() {
 
   const visit = {
     date: new Date().toLocaleString(),
-    bp: document.getElementById("bp").value,
-    temp: document.getElementById("temp").value,
-    pr: document.getElementById("pr").value,
-    rr: document.getElementById("rr").value,
-    oxygen: document.getElementById("oxygen").value,
-    complaint: document.getElementById("complaint").value
+    bp: document.getElementById("bp").value || "",
+    temp: document.getElementById("temp").value || "",
+    pr: document.getElementById("pr").value || "",
+    rr: document.getElementById("rr").value || "",
+    oxygen: document.getElementById("oxygen").value || "",
+    complaint: document.getElementById("complaint").value || ""
   };
 
-  if (!currentStudent.visits) currentStudent.visits = [];
+  currentStudent.visits = currentStudent.visits || [];
   currentStudent.visits.push(visit);
 
   students = students.map(s => (s.id === currentStudent.id ? currentStudent : s));
   saveData();
   loadVisits();
 
-  document.querySelectorAll(".vital-section input, .vital-section textarea").forEach(i => (i.value = ""));
+  document.querySelectorAll(".vital-section input, .vital-section textarea")
+    .forEach(i => (i.value = ""));
 }
 
 function loadVisits() {
   const tbody = document.getElementById("visitBody");
   tbody.innerHTML = "";
-  if (!currentStudent || !currentStudent.visits || !currentStudent.visits.length) {
+
+  if (!currentStudent || !currentStudent.visits?.length) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No visit records yet.</td></tr>`;
     return;
   }
+
   currentStudent.visits.forEach(v => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -311,18 +320,16 @@ function clearVisits() {
 // ==========================
 
 // Default credentials
-if(!localStorage.getItem("username")) {
+if (!localStorage.getItem("username")) {
   localStorage.setItem("username", "KLLClinicLipa");
   localStorage.setItem("password", "kolehiyonglungsodnglipa");
 }
 
-// Toggle Change Credentials section
 function toggleChangeCreds() {
   const div = document.getElementById("changeCredsDiv");
   div.style.display = div.style.display === "block" ? "none" : "block";
 }
 
-// Login
 function login() {
   const user = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value.trim();
@@ -331,16 +338,14 @@ function login() {
   const savedUser = localStorage.getItem("username");
   const savedPass = localStorage.getItem("password");
 
-  if(user === savedUser && pass === savedPass) {
+  if (user === savedUser && pass === savedPass) {
     localStorage.setItem("isLoggedIn", "true");
-    loginError.textContent = "";
     window.location.href = "student.html";
   } else {
     loginError.textContent = "❌ Invalid username or password!";
   }
 }
 
-// Change Credentials
 function changeCredentials() {
   const oldUser = document.getElementById("oldUser").value.trim();
   const oldPass = document.getElementById("oldPass").value.trim();
@@ -349,39 +354,33 @@ function changeCredentials() {
   const changeError = document.getElementById("changeError");
   const changeSuccess = document.getElementById("changeSuccess");
 
-  const savedUser = localStorage.getItem("username");
-  const savedPass = localStorage.getItem("password");
-
   changeError.textContent = "";
   changeSuccess.textContent = "";
 
-  if(oldUser !== savedUser || oldPass !== savedPass) {
-    changeError.textContent = "❌ Old credentials are incorrect!";
+  const savedUser = localStorage.getItem("username");
+  const savedPass = localStorage.getItem("password");
+
+  if (oldUser !== savedUser || oldPass !== savedPass) {
+    changeError.textContent = "❌ Old credentials incorrect!";
     return;
   }
 
-  if(!newUser || !newPass) {
-    changeError.textContent = "❌ Please enter new username and password!";
+  if (!newUser || !newPass) {
+    changeError.textContent = "❌ Enter both new username & password!";
     return;
   }
 
   localStorage.setItem("username", newUser);
   localStorage.setItem("password", newPass);
-  changeSuccess.textContent = "✅ Credentials updated successfully!";
-  document.getElementById("oldUser").value = "";
-  document.getElementById("oldPass").value = "";
-  document.getElementById("newUser").value = "";
-  document.getElementById("newPass").value = "";
+  changeSuccess.textContent = "✅ Credentials updated!";
 }
 
-// Protect pages
 function checkLogin() {
-  if(localStorage.getItem("isLoggedIn") !== "true") {
+  if (localStorage.getItem("isLoggedIn") !== "true") {
     window.location.href = "index.html";
   }
 }
 
-// Logout function
 function logout() {
   localStorage.removeItem("isLoggedIn");
   window.location.href = "index.html";
